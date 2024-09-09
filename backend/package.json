@@ -1,0 +1,32 @@
+{
+  "name": "comigotech-ticket-manager",
+  "version": "1.0.0",
+  "description": "API para gerenciamento de tickets com Express, Prisma e PostgreSQL",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "prisma": "prisma"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.19.1",
+    "express": "^4.19.2",
+    "prisma": "^5.19.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "keywords": [
+    "express",
+    "prisma",
+    "postgresql",
+    "api",
+    "tickets"
+  ],
+  "author": "Márcio Victor",
+  "license": "ISC"
+}
