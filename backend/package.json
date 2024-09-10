@@ -2,20 +2,28 @@
   "name": "comigotech-ticket-manager",
   "version": "1.0.0",
   "description": "API para gerenciamento de tickets com Express, Prisma e PostgreSQL",
-  "main": "src/server.js",
-  "type": "module",
+  "main": "src/server.ts",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start": "tsc && node dist/server.js",
     "prisma": "prisma"
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
+    "bcryptjs": "^2.4.3",
+    "comigotech-ticket-manager": "file:",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
     "prisma": "^5.19.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^22.5.4",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.6.2"
   },
   "engines": {
     "node": ">=16"
