@@ -1,10 +1,10 @@
-import React, {useState, useEffect, createContext, useContext, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
-import { login as ApiLogin, register as ApiRegister, getUserByToken } from "../services/api";
+import React, { useState, useEffect, createContext, useContext, ReactNode} from "react";
 import Cookies from "js-cookie";
+import { login as apiLogin, register as apiRegister } from "../services/api";
 
 interface AuthContextType {
   user: any;
+  loading: boolean;
   login: (
     email: string,
     password: string,
@@ -28,29 +28,20 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<any>(null);
-  const [authToken, setAuthToken] = useState<string | null>(null);
-
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const token = Cookies.get("authToken");
+    const id = Cookies.get("id");
+    const token = Cookies.get("token");
+    const role = Cookies.get("role");
+    const name = Cookies.get("name");
+    const email = Cookies.get("email");
 
-    if (token) {
-      setAuthToken(token);
-
-      const fetchUser = async () => {
-        try {
-          const userData = await getUserByToken(token);
-          setUser(userData.user);
-        } catch (error) {
-          console.error("Erro ao recuperar o usuário pelo token:", error);
-          logout(navigate);
-        }
-      };
-
-      fetchUser();
+    if (token && role) {
+      setUser({ id, token, role, name, email });
     }
-  }, [navigate]);
+    setLoading(false);
+  }, []);
 
   const login = async (
     email: string,
@@ -58,17 +49,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     navigate: (path: string) => void
   ) => {
     try {
-      const data = await ApiLogin({ email, password });
-      const { user, token } = data;
+      const data = await apiLogin({email, password});
+      const { token, user } = data;
+      const { id, name, role } = user;
 
-      Cookies.set("authToken", token);
-      setAuthToken(token);
+      Cookies.set("id", id, { expires: 1 });
+      Cookies.set("token", token, { expires: 1 });
+      Cookies.set("name", name, { expires: 1 });
+      Cookies.set("role", role, { expires: 1 });
+      Cookies.set("email", email, { expires: 1 });
 
-      setUser(user);
-
+      setUser({ token, role, name, email });
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Erro ao fazer login:", error);
+      throw new Error(
+        "Credenciais incorretas. Por favor, tente novamente."
+      );
     }
   };
 
@@ -80,29 +77,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     navigate: (path: string) => void
   ) => {
     try {
-      const data = await ApiRegister({ name, email, password, role });
-      const dataLogin = await ApiLogin({ email, password });
-      const { token, user } = dataLogin;
-
-      Cookies.set("authToken", token);
-      setAuthToken(token);
-      setUser(user);
-
-      navigate("/");
-    } catch (error) {
+      await apiRegister({name, email, password, role});
+      navigate("/login");
+    } catch (error: any) {
       console.error("Erro ao registrar:", error);
+      throw new Error(
+        "Houve um erro ao tentar registrar. Por favor, tente novamente."
+      );
     }
   };
 
   const logout = (navigate: (path: string) => void) => {
-    Cookies.remove("authToken");
+    Cookies.remove("id");
+    Cookies.remove("token");
+    Cookies.remove("role");
+    Cookies.remove("name");
+    Cookies.remove("email");
+
     setUser(null);
-    setAuthToken(null);
     navigate("/login");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

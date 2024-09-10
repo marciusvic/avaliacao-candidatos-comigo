@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { LoginPage } from "../pages/Login/LoginPage";
 import { HomePage } from "../pages/Home/HomePage";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+import PublicRoute from "../components/PublicRoute/PublicRoute";
 
 const AppRouter = () => {
     return(
@@ -19,8 +20,10 @@ const AppRouter = () => {
                 <Route
                     path="/login"
                     element={
-                        <LoginPage />
-                        }
+                        <PublicRoute>
+                            <LoginPage />
+                        </PublicRoute>
+                            }
                 />
             </Routes>
         </Suspense>                                               
