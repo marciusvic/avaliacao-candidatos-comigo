@@ -1,8 +1,13 @@
 import express, { Request, Response } from 'express';
 import { registerUser, loginUser } from '../services/authService';
+import { authenticateToken } from '../middleware/authMiddleware';
+import { JwtPayload } from 'jsonwebtoken';
 
 // Rotas para autenticação
 const router = express.Router();
+interface CustomRequest extends Request {
+  user?: string | JwtPayload;
+}
 
 router.post('/register', async (req: Request, res: Response) => {
     const { name, email, password, role } = req.body;
@@ -39,6 +44,17 @@ router.post('/login', async (req: Request, res: Response) => {
     }
   }
 });
+
+router.get('/me', authenticateToken, (req: CustomRequest, res: Response) => {
+  const user = req.user;
+
+  if (!user) {
+    return res.status(401).json({ message: 'Usuário não autenticado' });
+  }
+
+  res.json({ user });
+});
+
 
 
 export default router;

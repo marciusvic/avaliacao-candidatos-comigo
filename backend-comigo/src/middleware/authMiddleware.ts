@@ -11,7 +11,6 @@ interface CustomRequest extends Request {
   user?: string | JwtPayload;
 }
 
-
 // Middleware para verificar o token JWT
 export const authenticateToken = (req: CustomRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers['authorization'];
