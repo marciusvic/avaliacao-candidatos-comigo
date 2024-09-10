@@ -1,0 +1,47 @@
+import React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import ApartmentIcon from '@mui/icons-material/Apartment';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Box, Divider } from '@mui/material';
+import ComigoLogo from '../../images/comigologo.png';
+
+export const NavBar: React.FC = () => {
+  return (
+    <AppBar position="static" className="bg-blue-600">
+      <Toolbar className="flex justify-between items-center w-full">
+        <div className="flex items-center">
+          <img src={ComigoLogo} alt="Comigo Logo" className="h-10 mr-4" />
+        </div>
+
+        <Typography variant="h6" className="flex-grow text-center text-white">
+          Atendimento ao Cliente
+        </Typography>
+
+        <Box display="flex" alignItems="center">
+          <IconButton color="inherit">
+            <RefreshIcon />
+          </IconButton>
+
+          <Divider orientation="vertical" flexItem className="bg-white mx-2" />
+
+          <IconButton color="inherit">
+            <ApartmentIcon />
+          </IconButton>
+
+          <IconButton color="inherit">
+            <DarkModeIcon />
+          </IconButton>
+
+          <IconButton edge="end" color="inherit">
+            <AccountCircleIcon />
+          </IconButton>
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+};

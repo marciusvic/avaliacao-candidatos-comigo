@@ -39,3 +39,18 @@ export const register = async (data: RegisterUser) => {
         console.error(error);
   }
 }
+
+export const getUserByToken = async (token: string) => {
+  try {
+    const response = await axiosInstance.get("/api/auth/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    console.error("Erro ao recuperar os dados do usuário:", error.response?.data || error.message);
+    throw new Error(error.response?.data?.message || "Erro ao recuperar os dados do usuário.");
+  }
+};
+  
