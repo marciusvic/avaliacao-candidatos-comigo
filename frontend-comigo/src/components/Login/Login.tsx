@@ -1,23 +1,32 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/AuthContext";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Lógica de envio de formulário
-    console.log({ email, password, rememberMe });
+    console.log(email, password);
+    try{
+      await login(email, password, navigate);
+      navigate("/");
+    } catch(error) {
+      console.error(error);
+    }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-comigo-gray">
+  <div className="flex justify-center items-center min-h-screen bg-comigo-gray">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center text-comigo-blue mb-2">
-          Entre na sua conta
-        </h2>
-        <p className="text-center text-gray-600 mb-6">
+      <h2 className="text-2xl font-bold text-start text-comigo-blue mb-2 font-sans">
+        Entre na sua conta
+      </h2>
+        <p className="text-start text-gray-600 mb-6">
           Boas-vindas! Por favor, insira suas credenciais para acessar os
           sistemas da Comigo.
         </p>
@@ -46,8 +55,6 @@ export const Login = () => {
             <label className="inline-flex items-center">
               <input
                 type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
                 className="form-checkbox h-4 w-4 text-comigo-blue"
               />
               <span className="ml-2 text-sm text-gray-600">
