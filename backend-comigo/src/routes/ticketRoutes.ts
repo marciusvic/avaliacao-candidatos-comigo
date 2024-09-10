@@ -8,7 +8,7 @@ import { TicketData } from '../services/ticketService';
 const router = express.Router();
 
 //Rota para listar um ticket por id
-router.get('/tickets/:id', async (req: Request<{ id: string }>, res: Response) => {
+router.get('/tickets/:id', authenticateToken, async (req: Request<{ id: string }>, res: Response) => {
   const { id } = req.params;
   try {
     const ticket = await getTicketById(Number(id));
@@ -23,7 +23,7 @@ router.get('/tickets/:id', async (req: Request<{ id: string }>, res: Response) =
 });
 
 // Rota para criar um ticket
-router.post("/tickets", async (req: Request<{}, {}, TicketData>, res: Response) => {
+router.post("/tickets", authenticateToken, async (req: Request<{}, {}, TicketData>, res: Response) => {
   try {
     const ticket = await createTicket(req.body);
     res.json(ticket);
@@ -37,7 +37,7 @@ router.post("/tickets", async (req: Request<{}, {}, TicketData>, res: Response) 
 });
 
 // Rota para listar todos os tickets
-router.get("/tickets", async (req: Request, res: Response) => {
+router.get("/tickets", authenticateToken, async (req: Request, res: Response) => {
   try {
     const tickets = await getAllTickets();
     res.json(tickets);
@@ -51,7 +51,7 @@ router.get("/tickets", async (req: Request, res: Response) => {
 });
 
 // Rota para atualizar um ticket
-router.put("/tickets/:id", async (req: Request<{ id: string }, {}, TicketData>, res: Response) => {
+router.put("/tickets/:id", authenticateToken, async (req: Request<{ id: string }, {}, TicketData>, res: Response) => {
   const { id } = req.params;
   try {
     const updatedTicket = await updateTicket(Number(id), req.body);
