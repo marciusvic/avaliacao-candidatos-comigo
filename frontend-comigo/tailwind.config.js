@@ -11,6 +11,8 @@ module.exports = {
       colors: {
         'comigo-gray': '#F1F5F9',
         'comigo-blue': '#1169B0',
+        'comigo-blue-nav': '#1169B0',
+        'comigo-divisor': '#DDDDDD',
       },
     },
   },

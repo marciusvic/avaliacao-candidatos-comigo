@@ -10,9 +10,19 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Box, Divider } from '@mui/material';
 import ComigoLogo from '../../images/comigologo.png';
 
+import { useAuth } from '../../hooks/AuthContext';
+import { useNavigate } from "react-router-dom";
+
 export const NavBar: React.FC = () => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout(navigate);
+  };
+
   return (
-    <AppBar position="static" className="bg-blue-600">
+    <AppBar position="static" className="comigo-blue-nav">
       <Toolbar className="flex justify-between items-center w-full">
         <div className="flex items-center">
           <img src={ComigoLogo} alt="Comigo Logo" className="h-10 mr-4" />
@@ -37,7 +47,7 @@ export const NavBar: React.FC = () => {
             <DarkModeIcon />
           </IconButton>
 
-          <IconButton edge="end" color="inherit">
+          <IconButton edge="end" color="inherit" onClick={handleLogout}>
             <AccountCircleIcon />
           </IconButton>
         </Box>
