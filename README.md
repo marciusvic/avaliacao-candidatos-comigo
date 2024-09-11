@@ -23,7 +23,25 @@
 
 ## Como rodar o projeto
 ### Back-end
+1. Tenha o docker instalado na sua máquina
+2. Clone o repositório
+3. Entre na pasta `backend-comigo`
+4. Execute o comando `docker-compose up --build` ou `sudo docker-compose up --build`(Caso esteja no Linux), O back-end estará rodando na porta 8000
+5. Use Postman ou Insomnia para criar um usuário, a rota é `localhost:8000/api/auth/register` e o corpo da requisição é:
+```json
+{
+    "name":"Seu Nome",
+    "email":"Seu Email",
+    "password":"Sua_Senha",
+    "role":"ADMIN" ou "ATTENDANT"
+}
+```
 ### Front-end
+1. Clone o repositório
+2. Entre na pasta `frontend-comigo`
+3. Execute o comando `yarn install` ou `npm install`
+4. Execute o comando `yarn start` ou `npm start`, o front-end estará rodando na porta 3000
+5. Faça login com o usuário criado no back-end
 
 ### Tecnologias utilizadas
 - [x] TypeScript (Ambos)
