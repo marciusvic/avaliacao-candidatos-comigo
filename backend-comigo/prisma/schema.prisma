@@ -8,16 +8,17 @@ generator client {
 }
 
 model Ticket {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   type        Type
   reason      String
   description String
   costumer    String
   vehicle     String
-  status      Status   @default(TODO)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  assignedTo  User?    @relation(fields: [userId], references: [id])
+  status      Status    @default(TODO)
+  term        DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  assignedTo  User?     @relation(fields: [userId], references: [id])
   userId      Int?
 }
 
@@ -34,6 +35,7 @@ enum Type {
   SUPPORT
   SELLING
   OPERATIONAL
+  RELATION
 }
 
 enum Role {

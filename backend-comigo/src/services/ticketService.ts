@@ -10,6 +10,7 @@ export interface TicketData {
   costumer: string;
   vehicle: string;
   status: Status;
+  term: string;
   userId: number;
 }
 
@@ -22,8 +23,8 @@ export const getTicketById = async (id: number): Promise<Ticket | null> => {
 
 // Função para criar um ticket
 export const createTicket = async (data: TicketData): Promise<Ticket> => {
-  const { type, reason, description, costumer, vehicle, status, userId } = data;
-  if (!type || !reason || !description || !costumer || !vehicle || !status || !userId) {
+  const { type, reason, description, costumer, vehicle, status, term, userId } = data;
+  if (!type || !reason || !description || !costumer || !vehicle || !status || !userId || !term) {
     throw new Error("Campos obrigatórios estão faltando");
   }
   return await prisma.ticket.create({
@@ -34,6 +35,7 @@ export const createTicket = async (data: TicketData): Promise<Ticket> => {
       costumer,
       vehicle,
       status,
+      term,
       userId
     }
   });
@@ -46,7 +48,7 @@ export const getAllTickets = async (): Promise<Ticket[]> => {
 
 // Função para atualizar um ticket
 export const updateTicket = async (id: number, data: TicketData): Promise<Ticket> => {
-  const { type, reason, description, costumer, vehicle, status, userId } = data;
+  const { type, reason, description, costumer, vehicle, status, term, userId } = data;
   return await prisma.ticket.update({
     where: { id: id },
     data: {
@@ -56,6 +58,7 @@ export const updateTicket = async (id: number, data: TicketData): Promise<Ticket
       costumer,
       vehicle,
       status,
+      term,
       userId,
     },
   });
