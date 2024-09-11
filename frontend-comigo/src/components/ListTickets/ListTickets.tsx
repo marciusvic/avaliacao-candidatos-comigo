@@ -3,16 +3,21 @@ import { Ticket } from '../Ticket/Ticket';
 import { fetchTickets, TicketData } from '../../services/api';
 import { useAuth } from '../../hooks/AuthContext';
 
-export const ListTickets: React.FC = () => {
+interface ListTicketsProps {
+  getTickets: () => void;
+}
+
+export const ListTickets: React.FC<ListTicketsProps> = ({ getTickets }) => {
   const { user } = useAuth();
   const [ticketData, setTicketData] = useState<TicketData[]>([]);
+
   useEffect(() => {
-    const getTickets = async () => {
+    const fetchData = async () => {
       const tickets = await fetchTickets(user.token);
       setTicketData(tickets);
     };
-    getTickets();
-  }, []);
+    fetchData();
+  }, [getTickets, user.token]);
   return (
     <div className="p-4">
       <table className="min-w-full table-auto border-separate" style={{ borderSpacing: '0 10px' }}>
@@ -38,8 +43,9 @@ export const ListTickets: React.FC = () => {
               description={ticket.description}
               customer={ticket.customer}
               vehicle={ticket.vehicle}
-              createdAt={ticket.createdAt}
+              createdAt={ticket.createdAt || ''}
               term={ticket.term}
+              getTickets={getTickets}
             />
           ))}
         </tbody>

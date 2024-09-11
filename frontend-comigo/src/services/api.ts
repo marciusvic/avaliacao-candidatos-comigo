@@ -22,7 +22,7 @@ export interface TicketData {
   status: string;
   term?: string;
   userId: number;
-  createdAt: string;
+  createdAt?: string;
 }
 
 export const login = async (data: LoginUser) => {
