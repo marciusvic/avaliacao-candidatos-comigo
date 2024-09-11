@@ -52,3 +52,7 @@
 - [x] React.js (Front-end)
 - [x] Axios (Front-end)
 - [x] Material-UI (Front-end)
+
+### Observações
+- O back-end foi feito com base no desafio, porém, não foi feito testes, monitoramento e observabilidade, e cloud.
+- O front-end foi feito com base no desafio, porém, não foi feito testes. Além disso, a parte de editar tickets e os filtros, não foram implementados.
