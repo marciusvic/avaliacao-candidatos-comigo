@@ -28,7 +28,7 @@ export const NavBar: React.FC = () => {
           <img src={ComigoLogo} alt="Comigo Logo" className="h-10 mr-4" />
         </div>
 
-        <Typography variant="h6" className="flex-grow text-center text-white">
+        <Typography variant="subtitle1" className="flex-grow text-center text-white">
           Atendimento ao Cliente
         </Typography>
 
