@@ -1,41 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Ticket } from '../Ticket/Ticket';
-
-// Dados de exemplo
-const ticketData = [
-  {
-    id: 110,
-    type: 'Suporte',
-    reason: 'Incidente',
-    description: 'Veículos sem comunicação',
-    customer: 'Cliente 1',
-    vehicle: 'Veículo 2, Veículo 6',
-    date: '02/07/2023',
-    term: '05/07/2023',
-  },
-  {
-    id: 111,
-    type: 'Vendas',
-    reason: 'Upgrade',
-    description: 'Upgrade veículo 2',
-    customer: 'Cliente 2',
-    vehicle: 'Veículo 2',
-    date: '01/07/2023',
-    term: '05/07/2023',
-  },
-  {
-    id: 112,
-    type: 'Operacional',
-    reason: 'Teste de rastreador',
-    description: 'Testes de instalação - OS 002',
-    customer: 'Cliente 1',
-    vehicle: 'Veículo 3',
-    date: '01/07/2023',
-    term: '05/07/2023',
-  },
-];
+import { fetchTickets, TicketData } from '../../services/api';
+import { useAuth } from '../../hooks/AuthContext';
 
 export const ListTickets: React.FC = () => {
+  const { user } = useAuth();
+  const [ticketData, setTicketData] = useState<TicketData[]>([]);
+  useEffect(() => {
+    const getTickets = async () => {
+      const tickets = await fetchTickets(user.token);
+      setTicketData(tickets);
+    };
+    getTickets();
+  }, []);
   return (
     <div className="p-4">
       <table className="min-w-full table-auto border-separate" style={{ borderSpacing: '0 10px' }}>
@@ -61,7 +38,7 @@ export const ListTickets: React.FC = () => {
               description={ticket.description}
               customer={ticket.customer}
               vehicle={ticket.vehicle}
-              date={ticket.date}
+              createdAt={ticket.createdAt}
               term={ticket.term}
             />
           ))}
