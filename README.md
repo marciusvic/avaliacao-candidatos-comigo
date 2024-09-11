@@ -42,6 +42,7 @@
 3. Execute o comando `yarn install` ou `npm install`
 4. Execute o comando `yarn start` ou `npm start`, o front-end estará rodando na porta 3000
 5. Faça login com o usuário criado no back-end
+6. Caso queira dar logout e fazer login com outro usuário, clique no botão de usuário no canto superior direito
 
 ### Tecnologias utilizadas
 - [x] TypeScript (Ambos)
