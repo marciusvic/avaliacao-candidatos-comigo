@@ -26,8 +26,9 @@
 1. Tenha o docker instalado na sua máquina
 2. Clone o repositório
 3. Entre na pasta `backend-comigo`
-4. Execute o comando `docker-compose up --build` ou `sudo docker-compose up --build`(Caso esteja no Linux), O back-end estará rodando na porta 8000
-5. Use Postman ou Insomnia para criar um usuário, a rota é `localhost:8000/api/auth/register` e o corpo da requisição é:
+4. Execute o comando `yarn install` ou `npm install`
+5. Execute o comando `docker-compose up --build` ou `sudo docker-compose up --build`(Caso esteja no Linux), O back-end estará rodando na porta 8000, é necessário rodar em um terminal separado `docker-compose exec app npx prisma generate` e `docker-compose up` novamente.
+6. Use Postman ou Insomnia para criar um usuário, a rota é `localhost:8000/api/auth/register` e o corpo da requisição é:
 ```json
 {
     "name":"Seu Nome",
